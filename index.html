@@ -3,48 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bài Viết Yêu Thích Mỗi Ngày</title>
+  <title>BÀI VIẾT YÊU THÍCH</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0;}
-    .container { max-width: 600px; margin: 2rem auto; background: #fff; padding: 2rem; border-radius: 1rem; box-shadow: 0 0 10px #ddd;}
+    .container { max-width: 900px; margin: 2rem auto; background: #fff; padding: 2rem; border-radius: 1rem; box-shadow: 0 0 10px #ddd;}
     h1 { text-align: center;}
-    ul { list-style-type: none; padding: 0;}
-    li { margin: 1.5rem 0; padding: 1rem; background: #f0f8ff; border-radius: 1rem;}
-    .date { color: #888; font-size: 0.95em;}
-    a { color: #0074d9; text-decoration: none;}
-    a:hover { text-decoration: underline;}
+    .post { margin: 2rem 0; padding: 2rem; background: #f0f8ff; border-radius: 1rem;}
+    .date { color: #888; font-size: 1.05em; font-weight: bold;}
+    .content { margin-top: 1rem; white-space: pre-wrap; font-size: 1.12em;}
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Bài Viết Yêu Thích</h1>
-    <ul id="list-posts">
-      <!-- Bài viết sẽ được thêm ở đây -->
-    </ul>
+    <h1>BÀI VIẾT YÊU THÍCH</h1>
+    <div id="list-posts"></div>
   </div>
   <script>
-    // Mẫu dữ liệu, bạn có thể thay trực tiếp tại đây hoặc dùng file json
-    const baiVietMoiNgay = [
-      {
-        date: '2025-05-20',
-        title: 'Cách tự động copy nội dung khi Facebook có bài viết mới',
-        link: 'https://www.facebook.com/Nghia72'
-      },
-      {
-        date: '2025-05-19',
-        title: 'Hướng dẫn học Medical Terminology hiệu quả',
-        link: 'https://yourblog.com/medical-terminology'
-      }
-      // Thêm các bài khác...
-    ];
+    const SHEET_ID = '1qDLvujMtQfGrOoXKvkxeFKzaAa9KHwF3AxyntJz0kE8';
+    const SHEET_TAB = 'news'; // Tên tab trong Google Sheets
 
-    const list = document.getElementById('list-posts');
-    baiVietMoiNgay.forEach(bv => {
-      const li = document.createElement('li');
-      li.innerHTML = `<span class="date">${bv.date}</span><br/>
-        <a href="${bv.link}" target="_blank">${bv.title}</a>`;
-      list.appendChild(li);
-    });
+    const SHEET_URL = `https://opensheet.vercel.app/${SHEET_ID}/${SHEET_TAB}`;
+
+    fetch(SHEET_URL)
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('list-posts');
+        data.forEach(bv => {
+          const postDiv = document.createElement('div');
+          postDiv.className = 'post';
+          postDiv.innerHTML = `
+            <div class="date">${bv.Date}</div>
+            <div class="content">${(bv.Content || '').replace(/\n/g, '<br/>')}</div>
+          `;
+          list.appendChild(postDiv);
+        });
+      })
+      .catch(err => {
+        document.getElementById('list-posts').innerHTML = `<div>Lỗi tải dữ liệu!</div>`;
+      });
   </script>
 </body>
 </html>
