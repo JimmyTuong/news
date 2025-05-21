@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bài Viết Yêu Thích Mỗi Ngày</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0;}
+    .container { max-width: 600px; margin: 2rem auto; background: #fff; padding: 2rem; border-radius: 1rem; box-shadow: 0 0 10px #ddd;}
+    h1 { text-align: center;}
+    ul { list-style-type: none; padding: 0;}
+    li { margin: 1.5rem 0; padding: 1rem; background: #f0f8ff; border-radius: 1rem;}
+    .date { color: #888; font-size: 0.95em;}
+    a { color: #0074d9; text-decoration: none;}
+    a:hover { text-decoration: underline;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bài Viết Yêu Thích</h1>
+    <ul id="list-posts">
+      <!-- Bài viết sẽ được thêm ở đây -->
+    </ul>
+  </div>
+  <script>
+    // Mẫu dữ liệu, bạn có thể thay trực tiếp tại đây hoặc dùng file json
+    const baiVietMoiNgay = [
+      {
+        date: '2025-05-20',
+        title: 'Cách tự động copy nội dung khi Facebook có bài viết mới',
+        link: 'https://www.facebook.com/Nghia72'
+      },
+      {
+        date: '2025-05-19',
+        title: 'Hướng dẫn học Medical Terminology hiệu quả',
+        link: 'https://yourblog.com/medical-terminology'
+      }
+      // Thêm các bài khác...
+    ];
+
+    const list = document.getElementById('list-posts');
+    baiVietMoiNgay.forEach(bv => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="date">${bv.date}</span><br/>
+        <a href="${bv.link}" target="_blank">${bv.title}</a>`;
+      list.appendChild(li);
+    });
+  </script>
+</body>
+</html>
